@@ -1,0 +1,51 @@
+//download pynput, pyserial, spotipy, 
+
+import serial
+import time
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyOAuth
+from pynput.keyboard import Key, Controller
+
+# Spotify API credentials
+client_id = '4c89fb79ae494a6889ec450d9a339250'
+client_secret = 'cf1b80224a36421fa8f6942d3f2b0b3c'
+redirect_uri = 'http://localhost/'
+scope = 'user-modify-playback-state user-read-playback-state user-read-currently-playing'
+
+# Set up Spotify authorization
+sp = Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
+                                       client_secret=client_secret,
+                                       redirect_uri=redirect_uri,
+                                       scope=scope))
+
+# Set up serial connection
+arduino = serial.Serial('COM9', 9600)  # Update 'COM9' with your actual COM port
+keyboard = Controller()
+
+def control_spotify(command):
+    if command == 'play_pause':
+        playback = sp.current_playback()
+        if playback and playback['is_playing']:
+            sp.pause_playback()
+        else:
+            sp.start_playback()
+    elif command == 'next_track':
+        sp.next_track()
+    elif command == 'previous_track':
+        sp.previous_track()
+    elif command.startswith('volume:'):
+        volume = int(command.split(':')[1])
+        sp.volume(volume)
+
+def play_playlist(playlist_uri):
+    sp.start_playback(context_uri=playlist_uri)
+
+while True:
+    if arduino.in_waiting > 0:
+        command = arduino.readline().decode('utf-8').strip()
+        if command == 'Rebirth':
+            play_playlist('https://open.spotify.com/playlist/4OASJoRW2g5OcMO56XaGIX')  # Replace with your playlist URI
+        elif command == 'Death':
+            play_playlist('https://open.spotify.com/playlist/3YDhwOMYp1QYABnlqN5Bpu')  # Replace with your playlist URI
+        else:
+            control_spotify(command)
