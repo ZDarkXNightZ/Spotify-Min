@@ -30,6 +30,9 @@ void setup() {
   pinMode(Next, INPUT);
   pinMode(Previous, INPUT);
   pinMode(potPin, INPUT);
+  pinMode(r, OUTPUT);
+  pinMode(g, OUTPUT);
+  pinMode(b, OUTPUT);
 }
 
 void loop() {
