@@ -12,8 +12,8 @@ int led9 = 10;
 int led10 = 11;
 int led11 = 12;
 int led12 = 13;
-float t = 25; //Delay if sound picked up
-float t1 = 5; //Delay if sound is not picked up
+int t = 25; //Delay if sound picked up
+int t1 = 5; //Delay if sound is not picked up
 void setup() {
   // put your setup code here, to run once:
 pinMode(soundsensor, INPUT);
