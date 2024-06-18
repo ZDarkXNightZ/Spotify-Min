@@ -1,4 +1,4 @@
-//download pynput, pyserial, spotipy, 
+#download pynput, pyserial, spotipy, 
 
 import serial
 import time
