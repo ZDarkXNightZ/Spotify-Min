@@ -90,11 +90,11 @@ delay(t1);
 
 if(sensorVal<5){
   digitalWrite(led6,HIGH);
-  digitalWrite(led8,HIGH);
+  digitalWrite(led7,HIGH);
   delay(t);}
 else{
-digitalWrite(led6,LOW);
 digitalWrite(led7,LOW);
+digitalWrite(led6,LOW);
   delay(t1);
 }
 }
